@@ -28,7 +28,7 @@ export function Firebase({ children }) {
 
     const googleSignIn = function() {
         firebase.auth().signInWithPopup(provider).then(function(result) {
-            console.log(result.user);
+            // console.log(result.user);
             setUser(result.user);
         }).catch(function(error) {
             console.error(error);
