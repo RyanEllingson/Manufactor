@@ -1,13 +1,16 @@
 import React from 'react';
-import Home from "./components/Home";
+import Container from "./components/Container";
 import { Firebase } from "./firebase/firebase";
+import { Page } from "./page/page";
 
 function App() {
   return (
     <Firebase>
-      <div className="App">
-        <Home/>
-      </div>
+      <Page>
+        <div className="App">
+          <Container/>
+        </div>
+      </Page>
     </Firebase>
   );
 }
