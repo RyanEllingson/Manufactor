@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Add Product",
+        "text": "Define a new product",
+        "page": "addProduct",
+        "buttonText": "Add Product"
+    },
+    {
+        "id": 2,
+        "title": "View Products",
+        "text": "View all existing products, edit a product, or create a job",
+        "page": "viewProducts",
+        "buttonText": "View Products"
+    },
+    {
+        "id": 3,
+        "title": "View Jobs",
+        "text": "View all existing jobs",
+        "page": "viewJobs",
+        "buttonText": "View Jobs"
+    }
+]

@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 import { FirebaseContext } from "../../firebase/firebase";
+import { PageContext } from "../../page/page";
 
 const ProductForm = function() {
     const [name, setName] = useState("");
     const { db, user } = useContext(FirebaseContext);
+    const { setPage } = useContext(PageContext);
 
     const changeHandler = function(value) {
         setName(value);
@@ -16,6 +18,7 @@ const ProductForm = function() {
         }).then(function(docRef) {
             console.log("Document successfully created with ID " + docRef.id);
             setName("");
+            setPage("viewProducts");
         }).catch(function(error) {
             console.error(error);
         });

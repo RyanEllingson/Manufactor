@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Navbar from "../Navbar";
-import ProductForm from "../ProductForm";
+import Content from "../Content";
 import Login from "../Login";
 import { FirebaseContext } from "../../firebase/firebase";
 
@@ -11,7 +11,7 @@ const Container = function() {
         <>
             <Navbar/>
             <div className="container">
-                {user ? <ProductForm/> : <Login/>}
+                {user ? <Content/> : <Login/>}
             </div>
         </>
     )
