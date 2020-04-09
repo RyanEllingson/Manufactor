@@ -37,6 +37,8 @@ const OperationPage = function({ productId, productName, handleBack }) {
         .then(() => {
             console.log("Operations successfully written");
             renderOperations();
+            setName("");
+            setDuration("");
         }).catch((error) => {
             console.error(error);
         })

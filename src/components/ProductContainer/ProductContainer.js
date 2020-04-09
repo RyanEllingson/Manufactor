@@ -41,12 +41,16 @@ const ProductContainer = function() {
     useEffect(() => {
         renderProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [displayOperations]);
 
     const productCardList = productList.map((product) => {
         return (
             <div className="col-3" key={product.id}>
-                <ProductCard name={product.data().name} handleDelete={() => {deleteProduct(product.id)}} viewOperations={()=>viewOperations(product.id, product.data().name)}/>
+                <ProductCard name={product.data().name}
+                    handleDelete={() => {deleteProduct(product.id)}}
+                    viewOperations={()=>viewOperations(product.id, product.data().name)}
+                    operations={product.data().operations}
+                />
             </div>
         );
     });
