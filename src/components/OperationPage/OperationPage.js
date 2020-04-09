@@ -16,7 +16,7 @@ const OperationPage = function({ productId, productName, handleBack }) {
         }).catch((error) => {
             console.error(error);
         });
-    }
+    };
 
     useEffect(() => {
         renderOperations();
@@ -40,10 +40,60 @@ const OperationPage = function({ productId, productName, handleBack }) {
         }).catch((error) => {
             console.error(error);
         })
+    };
+
+    const moveUp = function(startIndex) {
+        const tempOperations = [...operations];
+        const movedOperation = tempOperations.splice(startIndex, 1);
+        tempOperations.splice(startIndex - 1, 0, movedOperation[0]);
+        db.collection("users").doc(`${user.uid}`).collection("products").doc(`${productId}`).set({
+            operations: tempOperations
+        }, { merge: true })
+        .then(() => {
+            renderOperations();
+        }).catch((error) => {
+            console.error(error);
+        });
+    };
+
+    const moveDown = function(startIndex) {
+        const tempOperations = [...operations];
+        const movedOperation = tempOperations.splice(startIndex, 1);
+        tempOperations.splice(startIndex + 1, 0, movedOperation[0]);
+        db.collection("users").doc(`${user.uid}`).collection("products").doc(`${productId}`).set({
+            operations: tempOperations
+        }, { merge: true })
+        .then(() => {
+            renderOperations();
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
+    const deleteOperation = function(index) {
+        const tempOperations = [...operations];
+        tempOperations.splice(index, 1);
+        db.collection("users").doc(`${user.uid}`).collection("products").doc(`${productId}`).set({
+            operations: tempOperations
+        }, { merge: true })
+        .then(() => {
+            renderOperations();
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     const operationList = operations.map((operation) => {
-        return <OperationCard name={operation.name} duration={operation.duration} key={operations.indexOf(operation)}/>
+        return <OperationCard
+            name={operation.name}
+            duration={operation.duration}
+            key={operations.indexOf(operation)}
+            step={operations.indexOf(operation)+1}
+            moveUp={()=>{moveUp(operations.indexOf(operation))}}
+            moveDown={()=>{moveDown(operations.indexOf(operation))}}
+            numOperations={operations.length}
+            handleDelete={()=>{deleteOperation(operations.indexOf(operation))}}
+        />
     });
 
     return (
