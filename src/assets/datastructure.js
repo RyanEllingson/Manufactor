@@ -30,3 +30,5 @@ jobs {
   ]
   is_complete: false
 }
+
+"react-icons"

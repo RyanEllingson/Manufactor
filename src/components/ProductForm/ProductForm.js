@@ -14,7 +14,8 @@ const ProductForm = function() {
     const clickHandler = function(event) {
         event.preventDefault();
         db.collection("users").doc(`${user.uid}`).collection("products").add({
-            name: name
+            name: name,
+            operations: []
         }).then(function(docRef) {
             console.log("Document successfully created with ID " + docRef.id);
             setName("");
