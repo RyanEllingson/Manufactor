@@ -8,7 +8,11 @@ const ProductCard = function({ name, handleDelete, viewOperations, operations })
         totalDuration.add(opDuration, "minutes");
     }
 
-    const durationStr = "Total production time: " + totalDuration.hours() + (totalDuration.hours() === 1 ? " hour, " : " hours, ") + totalDuration.minutes() + (totalDuration.minutes() === 1 ? " minute" : " minutes");
+    const durationInMinutes = totalDuration.asMinutes();
+    const minutes = durationInMinutes % 60;
+    const hours = Math.floor(durationInMinutes / 60);
+
+    const durationStr = "Total production time: " + hours + (hours === 1 ? " hour, " : " hours, ") + minutes + (minutes === 1 ? " minute" : " minutes");
 
     return (
         <div className="card mb-3">
