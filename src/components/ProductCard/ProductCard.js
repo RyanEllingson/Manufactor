@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const ProductCard = function({ name, handleDelete, viewOperations, operations }) {
+const ProductCard = function({ name, handleDelete, viewOperations, operations, viewJobForm }) {
     const totalDuration = moment.duration(0);
     for (let i=0; i<operations.length; i++) {
         const opDuration = parseInt(operations[i].duration);
@@ -20,6 +20,7 @@ const ProductCard = function({ name, handleDelete, viewOperations, operations })
                 <h5 className="card-title">{name}</h5>
                 <p className="card-text">{durationStr}</p>
                 <button className="btn btn-success mb-1" onClick={viewOperations}>View operations</button>
+                <button className="btn btn-secondary mb-1" onClick={viewJobForm}>Create a job</button>
                 <button className="btn btn-danger" onClick={handleDelete}>Delete product</button>
             </div>
         </div>
