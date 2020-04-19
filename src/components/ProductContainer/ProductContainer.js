@@ -25,7 +25,7 @@ const ProductContainer = function() {
             const products = [];
             querySnapshot.forEach((doc) => {
                 products.push(doc);
-            })
+            });
             setProductList(products);
         });
     };
