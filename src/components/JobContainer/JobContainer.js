@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FirebaseContext } from "../../firebase/firebase";
 import JobCard from "../JobCard";
+import JobDetails from "../JobDetails";
 
 const JobContainer = function() {
     const { db, user } = useContext(FirebaseContext);
     const [jobList, setJobList] = useState([]);
+    const [viewDetails, setViewDetails] = useState(false);
+    const [jobId, setJobId] = useState("");
 
     const renderJobs = function() {
         db.collection("users").doc(`${user.uid}`).collection("jobs").get().then((querySnapshot) => {
@@ -16,6 +19,16 @@ const JobContainer = function() {
         });
     }
 
+    const viewJobDetails = function(event, id) {
+        event.preventDefault();
+        setJobId(id);
+        setViewDetails(true);
+    }
+
+    const handleBack = function() {
+        setViewDetails(false);
+    };
+
     const jobCardList = jobList.map((job) => {
         return <JobCard
             key={job.id}
@@ -23,6 +36,7 @@ const JobContainer = function() {
             productName={job.data().productName}
             dueDate={job.data().dueDate}
             complete={job.data().complete}
+            handleClick={(e)=>{viewJobDetails(e, job.id)}}
         />
     });
 
@@ -32,11 +46,34 @@ const JobContainer = function() {
     }, [])
 
     return (
-        <div className="card">
-            <ul className="list-group list-group-flush">
-                {jobCardList}
-            </ul>
-        </div>
+        <>
+            {viewDetails ? <JobDetails handleBack={handleBack} jobId={jobId} /> :
+            <div className="card">
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-3">
+                                    <p className="card-text">Job ID</p>
+                                </div>
+                                <div className="col-3">
+                                    <p className="card-text">Product</p>
+                                </div>
+                                <div className="col-2">
+                                    <p className="card-text">Due:</p>
+                                </div>
+                                <div className="col-2">
+                                    <p className="card-text">Complete?</p>
+                                </div>
+                                <div className="col-2">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {jobCardList}
+                </ul>
+            </div>}
+        </>
     );
 }
 

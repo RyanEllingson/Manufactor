@@ -14,7 +14,7 @@ const JobForm = function({ productId, productName, handleBack, operations }) {
 
     const handleSubmit = function(event) {
         event.preventDefault();
-        const dueDate = moment(year + "-" + month + "-" + day);
+        const dueDate = moment(year + "-" + month + "-" + day + "T08");
         console.log(dueDate);
         if (!dueDate._isValid) {
             setDateError(true);
