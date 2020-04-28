@@ -49,27 +49,27 @@ const JobContainer = function() {
         <>
             {viewDetails ? <JobDetails handleBack={handleBack} jobId={jobId} /> :
             <div className="card">
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-3">
-                                    <p className="card-text">Job ID</p>
-                                </div>
-                                <div className="col-3">
-                                    <p className="card-text">Product</p>
-                                </div>
-                                <div className="col-2">
-                                    <p className="card-text">Due:</p>
-                                </div>
-                                <div className="col-2">
-                                    <p className="card-text">Complete?</p>
-                                </div>
-                                <div className="col-2">
-                                </div>
+                <div className="card-header">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-3">
+                                <p className="card-text">Job ID</p>
+                            </div>
+                            <div className="col-3">
+                                <p className="card-text">Product</p>
+                            </div>
+                            <div className="col-2">
+                                <p className="card-text">Due:</p>
+                            </div>
+                            <div className="col-2">
+                                <p className="card-text">Complete?</p>
+                            </div>
+                            <div className="col-2">
                             </div>
                         </div>
-                    </li>
+                    </div>
+                </div>
+                <ul className="list-group list-group-flush">
                     {jobCardList}
                 </ul>
             </div>}

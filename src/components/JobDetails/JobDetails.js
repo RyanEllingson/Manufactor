@@ -1,22 +1,38 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FirebaseContext } from "../../firebase/firebase";
+import JobOpCard from "../JobOpCard";
 import moment from "moment";
 
 const JobDetails = function({ handleBack, jobId }) {
     const { user, db } = useContext(FirebaseContext);
     const [currentJob, setCurrentJob] = useState(null);
-    const [dueDate, setDueDate] = useState(null);
+    const [operations, setOperations] = useState([]);
 
-    useEffect(() => {
+    const renderJob = function() {
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).get()
         .then((querySnapshot) => {
-            setDueDate(moment(querySnapshot.data().dueDate));
             setCurrentJob(querySnapshot);
+            setOperations(querySnapshot.data().operations);
         }).catch((error) => {
             console.error(error);
         });
+    }
+
+    useEffect(() => {
+        renderJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const startJob = function(event) {
+        event.preventDefault();
+        db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
+            started: true
+        }, { merge: true })
+        .then(renderJob())
+        .catch((error) => {
+            console.error(error);
+        });
+    };
 
     return (
         <div className="container">
@@ -31,13 +47,29 @@ const JobDetails = function({ handleBack, jobId }) {
                         <h5 className="card-header">Job ID: {currentJob.id}</h5>
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-4">
                                     <p className="card-text">Product: {currentJob.data().productName}</p>
-                                    <p className="card-text">Due date: {dueDate.format("dddd, MMMM Do YYYY")}</p>
+                                    <p className="card-text">Due date: {moment(currentJob.data().dueDate).format("dddd, MMMM Do YYYY")}</p>
                                     <p className="card-text">Customer: {currentJob.data().customer}</p>
                                 </div>
-                                <div className="col-6">
-
+                                <div className="col-8">
+                                    <div className="card">
+                                        <div className="card-header">
+                                            Operations
+                                        </div>
+                                        <ul className="list-group list-group-flush text-left">
+                                            {operations.map((operation) => {
+                                                return <JobOpCard
+                                                    name={operation.name}
+                                                    key={operations.indexOf(operation)}
+                                                    index={operations.indexOf(operation)}
+                                                    activeStep={currentJob.data().activeStep}
+                                                    started={currentJob.data().started}
+                                                    handleStart={(e)=>startJob(e)}
+                                                />
+                                            })}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
