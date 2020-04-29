@@ -30,7 +30,7 @@ const JobForm = function({ productId, productName, handleBack, operations }) {
                 customer: customer,
                 dueDate: dueDate._i,
                 started: false,
-                complete: false,
+                completed: false,
                 activeStep: 0
             }).then(()=> {
                 const myTimeout = setTimeout(() => {
