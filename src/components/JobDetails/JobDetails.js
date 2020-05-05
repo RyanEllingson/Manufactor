@@ -28,7 +28,8 @@ const JobDetails = function({ handleBack, jobId }) {
         Object.assign(operations[0], {started: true});
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             started: true,
-            operations: operations
+            operations: operations,
+            activeStepName: operations[0].name
         }, { merge: true })
         .then(renderJob())
         .catch((error) => {
@@ -42,7 +43,8 @@ const JobDetails = function({ handleBack, jobId }) {
         Object.assign(operations[index + 1], {started: true});
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             operations: operations,
-            activeStep: index + 1
+            activeStep: index + 1,
+            activeStepName: operations[index+1].name
         }, { merge: true })
         .then(renderJob())
         .catch((error) => {
@@ -56,7 +58,8 @@ const JobDetails = function({ handleBack, jobId }) {
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             operations: operations,
             completed: true,
-            activeStep: -1
+            activeStep: -1,
+            activeStepName: "n/a"
         }, { merge: true })
         .then(renderJob())
         .catch((error) => {

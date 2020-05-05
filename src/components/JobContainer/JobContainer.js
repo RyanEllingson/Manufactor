@@ -24,7 +24,7 @@ const JobContainer = function() {
             id={job.id}
             productName={job.data().productName}
             dueDate={job.data().dueDate}
-            complete={job.data().complete}
+            completed={job.data().completed}
             handleClick={(e)=>{viewJobDetails(e, job.id)}}
         />
     });

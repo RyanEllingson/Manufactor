@@ -1,20 +1,27 @@
 [
     {
         "id": 1,
+        "title": "Add Operation",
+        "text": "Define a new operation",
+        "page": "addOperation",
+        "buttonText": "Add Operation"
+    },
+    {
+        "id": 2,
         "title": "Add Product",
         "text": "Define a new product",
         "page": "addProduct",
         "buttonText": "Add Product"
     },
     {
-        "id": 2,
+        "id": 3,
         "title": "View Products",
         "text": "View all existing products, edit a product, or create a job",
         "page": "viewProducts",
         "buttonText": "View Products"
     },
     {
-        "id": 3,
+        "id": 4,
         "title": "View Jobs",
         "text": "View all existing jobs",
         "page": "viewJobs",

@@ -32,8 +32,6 @@ const JobSearchForm = function({ setJobList }) {
         }
         setChosenProducts(selection);
         setChosenProductIds(selectionIds);
-        console.log(selection);
-        console.log(selectionIds);
     }
 
     const handleSubmit = function(event) {

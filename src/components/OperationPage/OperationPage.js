@@ -4,10 +4,25 @@ import OperationForm from "../OperationForm";
 import OperationCard from "../OperationCard";
 
 const OperationPage = function({ productId, productName, handleBack }) {
-    const [name, setName] = useState("");
     const [duration, setDuration] = useState("");
     const { db, user } = useContext(FirebaseContext);
     const [operations, setOperations] = useState([]);
+    const [operationList, setOperationList] = useState([]);
+    const [chosenOperation, setChosenOperation] = useState("");
+    const [chosenOpId, setChosenOpId] = useState("");
+
+    const populateOperationList = function() {
+        const tempOperationList = [];
+        db.collection("users").doc(`${user.uid}`).collection("operations").get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                tempOperationList.push(doc);
+            });
+            setOperationList(tempOperationList);
+        }).catch((error) => {
+            console.error(error);
+        });
+    };
 
     const renderOperations = function() {
         db.collection("users").doc(`${user.uid}`).collection("products").doc(`${productId}`).get()
@@ -19,6 +34,7 @@ const OperationPage = function({ productId, productName, handleBack }) {
     };
 
     useEffect(() => {
+        populateOperationList();
         renderOperations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -26,7 +42,8 @@ const OperationPage = function({ productId, productName, handleBack }) {
     const addOperation = function(event) {
         event.preventDefault();
         const newOperation = {
-            name: name,
+            opId: chosenOpId,
+            name: chosenOperation,
             duration: duration
         }
         const tempOperations = [...operations];
@@ -35,9 +52,7 @@ const OperationPage = function({ productId, productName, handleBack }) {
             operations: tempOperations
         }, { merge: true })
         .then(() => {
-            console.log("Operations successfully written");
             renderOperations();
-            setName("");
             setDuration("");
         }).catch((error) => {
             console.error(error);
@@ -85,7 +100,7 @@ const OperationPage = function({ productId, productName, handleBack }) {
         });
     }
 
-    const operationList = operations.map((operation) => {
+    const productOpList = operations.map((operation) => {
         return <OperationCard
             name={operation.name}
             duration={operation.duration}
@@ -110,10 +125,18 @@ const OperationPage = function({ productId, productName, handleBack }) {
             </div>
             <div className="row">
                 <div className="col-4">
-                    <OperationForm name={name} setName={setName} duration={duration} setDuration={setDuration} handleSubmit={(e)=>addOperation(e)}/>
+                    <OperationForm
+                        duration={duration}
+                        setDuration={setDuration}
+                        operationList={operationList}
+                        chosenOperation={chosenOperation}
+                        setChosenOperation={setChosenOperation}
+                        setChosenOpId={setChosenOpId}
+                        handleSubmit={(e)=>addOperation(e)}
+                    />
                 </div>
                 <div className="col-8">
-                    {operationList}
+                    {productOpList}
                 </div>
             </div>
         </>

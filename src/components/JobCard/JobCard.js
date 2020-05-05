@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const JobCard = function({ id, productName, dueDate, complete, handleClick }) {
+const JobCard = function({ id, productName, dueDate, completed, handleClick }) {
     const jobDueDate = moment(dueDate);
 
     return (
@@ -18,7 +18,7 @@ const JobCard = function({ id, productName, dueDate, complete, handleClick }) {
                         <p className="card-text">{jobDueDate.fromNow()}</p>
                     </div>
                     <div className="col-2">
-                        <p className="card-text">{complete ? "Yes" : "No"}</p>
+                        <p className="card-text">{completed ? "Yes" : "No"}</p>
                     </div>
                     <div className="col-2">
                         <button className="btn btn-success" onClick={handleClick}>View details</button>

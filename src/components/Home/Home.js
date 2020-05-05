@@ -8,7 +8,7 @@ const Home = function() {
 
     const pageList = pages.map((item) => {
         return (
-            <div className="col-4" key={item.id}>
+            <div className="col-4 mb-3" key={item.id}>
                 <ContentCard  title={item.title} text={item.text} clickHandler={()=>setPage(item.page)} buttonText={item.buttonText}/>
             </div>
         );
