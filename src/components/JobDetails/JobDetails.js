@@ -60,9 +60,7 @@ const JobDetails = function({ handleBack, jobId }) {
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             operations: operations,
             completed: true,
-            activeStep: -1,
-            activeStepName: "n/a",
-            activeStepId: "n/a"
+            activeStep: -1
         }, { merge: true })
         .then(renderJob())
         .catch((error) => {
