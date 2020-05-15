@@ -32,7 +32,8 @@ const JobForm = function({ productId, productName, handleBack, operations }) {
                 started: false,
                 completed: false,
                 activeStep: 0,
-                activeStepName: operations[0].name
+                activeStepName: operations[0].name,
+                activeStepId: operations[0].id
             }).then(()=> {
                 const myTimeout = setTimeout(() => {
                     setSuccess(false);

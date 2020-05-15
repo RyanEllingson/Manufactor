@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import JobCard from "../JobCard";
 import JobDetails from "../JobDetails";
 import JobSearchForm from "../JobSearchForm";
+import JobSortForm from "../JobSortForm";
 
 const JobContainer = function() {
     const [jobList, setJobList] = useState([]);
     const [viewDetails, setViewDetails] = useState(false);
     const [jobId, setJobId] = useState("");
+    const [modifiedJobList, setModifiedJobList] = useState([]);
+
+    useEffect(() => {
+        setModifiedJobList(jobList);
+    }, [jobList]);
 
     const viewJobDetails = function(event, id) {
         event.preventDefault();
@@ -18,7 +24,7 @@ const JobContainer = function() {
         setViewDetails(false);
     };
 
-    const jobCardList = jobList.map((job) => {
+    const jobCardList = modifiedJobList.map((job) => {
         return <JobCard
             key={job.id}
             id={job.id}
@@ -33,8 +39,9 @@ const JobContainer = function() {
         <>
             {viewDetails ? <JobDetails handleBack={handleBack} jobId={jobId} /> :
             <>
-                <JobSearchForm setJobList={setJobList}/>
-                <div className="card">
+                <JobSearchForm setJobList={setJobList} setModifiedJobList={setModifiedJobList}/>
+                <JobSortForm jobList={jobList} modifiedJobList={modifiedJobList} setModifiedJobList={setModifiedJobList}/>
+                <div className="card mb-3">
                     <div className="card-header">
                         <div className="container">
                             <div className="row">
