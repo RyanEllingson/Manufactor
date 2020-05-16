@@ -43,7 +43,6 @@ const JobSortForm = function({ jobList, modifiedJobList, setModifiedJobList }) {
             }
         });
         setModifiedJobList(jobs);
-        console.log(chosenProductIds);
     };
 
     const swap = function(array, index1, index2) {
@@ -58,7 +57,6 @@ const JobSortForm = function({ jobList, modifiedJobList, setModifiedJobList }) {
         for (let i=0; i<tempArray.length - 1; i++) {
             for (let j=i; j<tempArray.length; j++) {
                 if (tempArray[i].data().productName < tempArray[j].data().productName) {
-                    console.log("swapping elements " + i + " and " + j);
                     swap(tempArray, i, j);
                 }
             }

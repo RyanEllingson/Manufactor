@@ -1,12 +1,15 @@
 import React from "react";
 
-const JobOpCard = function({ name, index, activeStep, started, handleStart, length, handleCompleteStep, handleCompleteJob }) {
+const JobOpCard = function({ name, index, activeStep, started, handleStart, length, handleCompleteStep, handleCompleteJob, actualDuration, completed }) {
     return (
         <li className={(index === activeStep && started) ? "list-group-item list-group-item-success" : "list-group-item"}>
             <div className="container">
                 <div className="row">
-                    <div className="col-9 my-auto">
+                    <div className="col-3 my-auto">
                         <span>{name}</span>
+                    </div>
+                    <div className="col-6 my-auto">
+                        {completed ? <span>Operation duration: {actualDuration} minutes</span> : ""}
                     </div>
                     <div className="col-3">
                         {(index === 0 && !started) ? <button className="btn btn-success" onClick={(e) => handleStart(e)}>Start Job</button> : ""}

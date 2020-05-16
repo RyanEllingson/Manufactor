@@ -25,7 +25,9 @@ const JobDetails = function({ handleBack, jobId }) {
 
     const startJob = function(event) {
         event.preventDefault();
+        const time = moment();
         Object.assign(operations[0], {started: true});
+        Object.assign(operations[0], {startTime: time.format()});
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             started: true,
             operations: operations,
@@ -40,8 +42,14 @@ const JobDetails = function({ handleBack, jobId }) {
 
     const completeStep = function(event, index) {
         event.preventDefault();
+        const stepStartTime = moment(operations[index].startTime);
+        const time = moment();
+        const actualDuration = moment.duration(time.diff(stepStartTime)).asMinutes();
         Object.assign(operations[index], {completed: true});
+        Object.assign(operations[index], {endTime: time.format()});
+        Object.assign(operations[index], {actualDuration: actualDuration});
         Object.assign(operations[index + 1], {started: true});
+        Object.assign(operations[index + 1], {startTime: time.format()});
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             operations: operations,
             activeStep: index + 1,
@@ -56,7 +64,12 @@ const JobDetails = function({ handleBack, jobId }) {
 
     const completeJob = function(event) {
         event.preventDefault();
+        const stepStartTime = moment(operations[operations.length - 1].startTime);
+        const time = moment();
+        const actualDuration = moment.duration(time.diff(stepStartTime)).asMinutes();
         Object.assign(operations[operations.length - 1], {completed: true});
+        Object.assign(operations[operations.length - 1], {endTime: time.format()});
+        Object.assign(operations[operations.length - 1], {actualDuration: actualDuration});
         db.collection("users").doc(`${user.uid}`).collection("jobs").doc(`${jobId}`).set({
             operations: operations,
             completed: true,
@@ -104,6 +117,8 @@ const JobDetails = function({ handleBack, jobId }) {
                                                     length={operations.length}
                                                     handleCompleteStep={completeStep}
                                                     handleCompleteJob={completeJob}
+                                                    actualDuration={operation.actualDuration}
+                                                    completed={operation.completed}
                                                 />
                                             })}
                                         </ul>
